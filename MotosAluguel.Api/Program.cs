@@ -1,15 +1,27 @@
+using MotosAluguel.Domain.Interfaces.Repositories;
+using MotosAluguel.Infra.DbContext;
+using MotosAluguel.Infra.Repositories;
+using Npgsql;
+using System.Data;
+using System.Data.Common;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddTransient<IDbConnection>(sp =>
+    new NpgsqlConnection(sp.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSingleton<DatabaseConnection>();
+
+builder.Services.AddSingleton<IMotorCycleWriterRepository, MotorCycleWriterRepository>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

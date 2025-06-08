@@ -4,5 +4,5 @@ namespace MotosAluguel.Domain.Interfaces.Repositories;
 
 public interface IMotorCycleReadRepository
 {
-    Task<Motorcycle> GetByIdAsync(string id);
+    Task<MotorCycle> GetByIdAsync(string id);
 }

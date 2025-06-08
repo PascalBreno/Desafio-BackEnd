@@ -2,7 +2,7 @@
 
 namespace MotosAluguel.Domain.Entities.MotorCycles;
 
-public sealed class Motorcycle : EntityBase
+public sealed class MotorCycle : EntityBase
 {
     public string Id { get; set; }
 

@@ -4,5 +4,5 @@ namespace MotosAluguel.Domain.Interfaces.Repositories;
 
 public interface IMotorCycleWriterRepository
 {
-    Task<string> InsertAsync(Motorcycle motorCycle);
+    Task<string> InsertAsync(MotorCycle motorCycle);
 }

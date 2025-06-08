@@ -12,7 +12,7 @@ public sealed class Rental : EntityBase
 
     public string MotorCycleId { get; init; }
 
-    public Motorcycle MotorCycle { get; set; }
+    public MotorCycle MotorCycle { get; set; }
 
     public DateTime BeginAt { get; init; }
 
