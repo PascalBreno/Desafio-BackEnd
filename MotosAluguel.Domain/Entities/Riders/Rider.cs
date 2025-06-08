@@ -2,7 +2,7 @@
 
 namespace MotosAluguel.Domain.Entities.Entregadores;
 
-public sealed class Entregador : EntityBase
+public sealed class Rider : EntityBase
 {
     public string Id { get; set; }
 

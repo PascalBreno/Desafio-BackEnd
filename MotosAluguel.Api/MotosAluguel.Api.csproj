@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -13,6 +13,12 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\MotosAluguel.Application.csproj" />
+    <ProjectReference Include="..\MotosAluguel.Domain\MotosAluguel.Domain.csproj" />
+    <ProjectReference Include="..\MotosAluguel.Infra\MotosAluguel.Infra.csproj" />
   </ItemGroup>
 
 </Project>

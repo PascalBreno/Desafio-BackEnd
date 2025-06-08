@@ -1,6 +1,6 @@
 ﻿using MotosAluguel.Domain.Entities.Base;
 using MotosAluguel.Domain.Entities.Entregadores;
-using MotosAluguel.Domain.Entities.Motos;
+using MotosAluguel.Domain.Entities.MotorCycles;
 
 namespace MotosAluguel.Domain.Entities.Locacoes;
 
