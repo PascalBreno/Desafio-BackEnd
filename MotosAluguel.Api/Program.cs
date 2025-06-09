@@ -1,9 +1,12 @@
-using MotosAluguel.Domain.Interfaces.Repositories;
+using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
+using MotosAluguel.Application.Services.Motorcycles;
+using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
+using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+using MotosAluguel.Domain.Validators.Motorcycles;
 using MotosAluguel.Infra.DbContext;
-using MotosAluguel.Infra.Repositories;
+using MotosAluguel.Infra.Repositories.Motorcyles;
 using Npgsql;
 using System.Data;
-using System.Data.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +19,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IDbConnection>(sp =>
     new NpgsqlConnection(sp.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSingleton<DatabaseConnection>();
+builder.Services.AddSingleton<DatabaseWriterConnection>();
+builder.Services.AddSingleton<DatabaseReaderConnection>();
 
-builder.Services.AddSingleton<IMotorCycleWriterRepository, MotorCycleWriterRepository>();
+builder.Services.AddSingleton<IMotorcycleInsertOrchestrator, MotorcycleInsertOrchestrator>();
+
+builder.Services.AddSingleton<IMotorcyclesInsertValidator, MotorcyclesValidator>();
+builder.Services.Decorate<IMotorcyclesInsertValidator, MotorcyclesUniquePlateValidator>();
+
+builder.Services.AddSingleton<IMotorcyclesReaderRepository, MotorcyclesReaderRepository>();
+
+builder.Services.AddSingleton<IMotorcycleWriterRepository, MotorcycleWriterRepository>();
+builder.Services.Decorate<IMotorcycleWriterRepository, MotorcycleWriterRepositoryWithErrorHandler>();
 
 var app = builder.Build();
 

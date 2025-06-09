@@ -1,6 +1,6 @@
 ﻿using MotosAluguel.Domain.Entities.Base;
 
-namespace MotosAluguel.Domain.Entities.Entregadores;
+namespace MotosAluguel.Domain.Entities.Riders;
 
 public sealed class Rider : EntityBase
 {

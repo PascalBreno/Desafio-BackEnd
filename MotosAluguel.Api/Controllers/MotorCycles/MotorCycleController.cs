@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MotosAluguel.Domain.Entities.MotorCycles;
-using MotosAluguel.Domain.Interfaces.Repositories;
+using MotosAluguel.Application.Commands.Motorcycles;
+using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 
 namespace MotosAluguel.Api.Controllers.MotorCycles;
 
@@ -8,21 +8,22 @@ namespace MotosAluguel.Api.Controllers.MotorCycles;
 [Route("api/[controller]")]
 public class MotorCycleController : ControllerBase
 {
-    private readonly IMotorCycleWriterRepository _repository;
+    private readonly IMotorcycleInsertOrchestrator _motorcycleInsertOrchestrator;
 
-    public MotorCycleController(IMotorCycleWriterRepository repository)
+    public MotorCycleController(IMotorcycleInsertOrchestrator motorcycleInsertOrchestrator)
     {
-        _repository = repository;
+        _motorcycleInsertOrchestrator = motorcycleInsertOrchestrator;
     }
 
     [HttpPost]
-    public async Task<IActionResult> InsertMotorCycle([FromBody] MotorCycle motorCycle)
+    public async Task<IActionResult> InsertMotorCycle([FromBody] MotorcycleInsertCommand command)
     {
-        if (motorCycle == null)
-            return BadRequest("Dados inválidos.");
+        var result = await _motorcycleInsertOrchestrator.RunAsync(command);
 
-        var insertedId = await _repository.InsertAsync(motorCycle);
+        if(result.Success)
+            return Created();
 
-        return CreatedAtAction(nameof(insertedId), new { id = insertedId }, motorCycle);
+        else
+            return BadRequest(result.Error);    
     }
 }

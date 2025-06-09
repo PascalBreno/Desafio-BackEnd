@@ -4,13 +4,13 @@ using System.Data;
 
 namespace MotosAluguel.Infra.DbContext;
 
-public class DatabaseConnection
+public class DatabaseReaderConnection
 {
     private readonly string _connectionString;
 
-    public DatabaseConnection(IConfiguration configuration)
+    public DatabaseReaderConnection(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _connectionString = configuration.GetConnectionString("ReaderConnection");
     }
 
     public IDbConnection CreateConnection() => new NpgsqlConnection(_connectionString);

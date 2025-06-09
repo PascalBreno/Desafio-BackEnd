@@ -2,13 +2,13 @@
 
 namespace MotosAluguel.Domain.Entities.MotorCycles;
 
-public sealed class MotorCycle : EntityBase
+public sealed class Motorcycle : EntityBase
 {
-    public string Id { get; set; }
+    public string Id { get; init; }
 
-    public int Year { get; set; }
+    public int Year { get; init; }
 
-    public string Model { get; set; }
+    public string Model { get; init; }
 
-    public string Plate { get; set; }
+    public string Plate { get; init; }
 }
