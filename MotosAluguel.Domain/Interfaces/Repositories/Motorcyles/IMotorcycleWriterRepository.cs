@@ -8,5 +8,5 @@ public interface IMotorcycleWriterRepository
 
     Task<string> InsertAsync(Motorcycle motorCycle);
 
-    Task<Motorcycle> UpdatePlateAsync(string id, string plate);
+    Task<bool> UpdatePlateAsync(string id, string plate);
 }
