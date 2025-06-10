@@ -8,11 +8,11 @@ public class RentalRiderCnhTypeValidator : IRentalValidator
 {
     private readonly IRentalValidator _validator;
 
-    private readonly IMotorcyclesReaderRepository _riderReaderRepository;
+    private readonly IMotorcyclesReadRepository _riderReaderRepository;
 
     public RentalRiderCnhTypeValidator(
         IRentalValidator validator,
-        IMotorcyclesReaderRepository riderReaderRepository)
+        IMotorcyclesReadRepository riderReaderRepository)
     {
         _validator = validator;
         _riderReaderRepository = riderReaderRepository;

@@ -2,9 +2,11 @@
 
 namespace MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 
-public interface IMotorcyclesReaderRepository
+public interface IMotorcyclesReadRepository
 {
     Task<Motorcycle> GetByIdAsync(string id);
+
+    Task<IEnumerable<Motorcycle>> GetByPlateAsync(string plate);
 
     Task<bool> ExistByPlateAsync(string plate);
 

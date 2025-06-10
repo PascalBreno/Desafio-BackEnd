@@ -15,5 +15,6 @@ public static class MotorcycleMapper
             Year = command.Ano
         };
     }
+
 }
 

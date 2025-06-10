@@ -5,19 +5,15 @@ using MotosAluguel.Application.Mappers.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 
-namespace MotosAluguel.Application.Services.Motorcycles;
+namespace MotosAluguel.Application.Orchestrators.Motorcycles;
 
-public class MotorcycleInsertOrchestrator : IMotorcycleInsertOrchestrator
+public class MotorcycleInsertOrchestrator(
+    IMotorcyclesInsertValidator validator,
+    IMotorcycleWriterRepository repository) : IMotorcycleInsertOrchestrator
 {
-    private readonly IMotorcyclesInsertValidator _validator;
+    private readonly IMotorcyclesInsertValidator _validator = validator;
 
-    private readonly IMotorcycleWriterRepository _repository;
-
-    public MotorcycleInsertOrchestrator(IMotorcyclesInsertValidator validator, IMotorcycleWriterRepository repository)
-    {
-        _validator = validator;
-        _repository = repository;
-    }
+    private readonly IMotorcycleWriterRepository _repository = repository;
 
     public async Task<OperationResult<string>> RunAsync(MotorcycleInsertCommand command)
     {

@@ -6,11 +6,11 @@ namespace MotosAluguel.Domain.Validators.Motorcycles;
 
 public class MotorcyclesUniquePlateValidator(
     IMotorcyclesInsertValidator validator,
-    IMotorcyclesReaderRepository motorcycleReadRepository) : IMotorcyclesInsertValidator
+    IMotorcyclesReadRepository motorcycleReadRepository) : IMotorcyclesInsertValidator
 {
     private readonly IMotorcyclesInsertValidator _validator = validator;
 
-    private readonly IMotorcyclesReaderRepository _motorcycleReadRepository = motorcycleReadRepository;
+    private readonly IMotorcyclesReadRepository _motorcycleReadRepository = motorcycleReadRepository;
 
     public async Task<bool> ValidateAsync(Motorcycle motorcycle)
     {

@@ -1,5 +1,5 @@
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
-using MotosAluguel.Application.Services.Motorcycles;
+using MotosAluguel.Application.Orchestrators.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 using MotosAluguel.Domain.Validators.Motorcycles;
@@ -27,7 +27,7 @@ builder.Services.AddSingleton<IMotorcycleInsertOrchestrator, MotorcycleInsertOrc
 builder.Services.AddSingleton<IMotorcyclesInsertValidator, MotorcyclesValidator>();
 builder.Services.Decorate<IMotorcyclesInsertValidator, MotorcyclesUniquePlateValidator>();
 
-builder.Services.AddSingleton<IMotorcyclesReaderRepository, MotorcyclesReaderRepository>();
+builder.Services.AddSingleton<IMotorcyclesReadRepository, MotorcyclesReaderRepository>();
 
 builder.Services.AddSingleton<IMotorcycleWriterRepository, MotorcycleWriterRepository>();
 builder.Services.Decorate<IMotorcycleWriterRepository, MotorcycleWriterRepositoryWithErrorHandler>();

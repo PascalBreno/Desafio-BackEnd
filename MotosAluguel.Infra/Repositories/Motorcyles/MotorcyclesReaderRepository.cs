@@ -6,7 +6,7 @@ using MotosAluguel.Infra.Repositories.Base;
 
 namespace MotosAluguel.Infra.Repositories.Motorcyles;
 
-public class MotorcyclesReaderRepository(IConfiguration configuration) : BaseReadRepository(configuration), IMotorcyclesReaderRepository
+public class MotorcyclesReaderRepository(IConfiguration configuration) : BaseReadRepository(configuration), IMotorcyclesReadRepository
 {
     public Task<bool> ExistById(string id)
     {

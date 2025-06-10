@@ -1,12 +1,16 @@
 ﻿using MotosAluguel.Domain.Entities.Riders;
+using MotosAluguel.Domain.Interfaces.Repositories.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
 
-namespace MotosAluguel.Domain.Validators.Riders.RiderInsert;
+namespace MotosAluguel.Domain.Validators.Riders;
 
-public class RiderInsertCnhTypeValidator(
-    IRiderInsertValidator insertValidator) : IRiderInsertValidator
+public class RiderUniqueCnhValidator(
+    IRiderInsertValidator insertValidator,
+    IRiderReaderRepository riderReaderRepository) : IRiderInsertValidator
 {
     private readonly IRiderInsertValidator _insertValidator = insertValidator;
+
+    private readonly IRiderReaderRepository _riderReaderRepository = riderReaderRepository;
 
     public async Task<bool> ValidateAsync(Rider rider)
     {
@@ -14,22 +18,12 @@ public class RiderInsertCnhTypeValidator(
 
         if (isValid)
         {
-            if (CnhTypeIsValid(rider.Cnh))
+            if (await _riderReaderRepository.ExistByCnh(rider.Cnh))
                 return false;
 
             return true;
         }
 
         return isValid;
-    }
-
-    private static bool CnhTypeIsValid(string cnh)
-    {
-        cnh = cnh.ToUpper();
-
-        if (cnh == "A" || cnh =="B" || cnh == "A,B" || cnh == "A+B" || cnh == "AB")
-            return true;
-
-        return false;
     }
 }

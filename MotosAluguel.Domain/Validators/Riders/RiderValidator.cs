@@ -1,13 +1,13 @@
 ﻿using MotosAluguel.Domain.Entities.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
 
-namespace MotosAluguel.Domain.Validators.Riders.RiderInsert;
+namespace MotosAluguel.Domain.Validators.Riders;
 
-public class RiderInsertValidator : IRiderInsertValidator
+public class RiderValidator : IRiderInsertValidator
 {
     private readonly IRiderInsertValidator _validator;
 
-    public RiderInsertValidator(IRiderInsertValidator validator)
+    public RiderValidator(IRiderInsertValidator validator)
     {
         _validator = validator;
     }

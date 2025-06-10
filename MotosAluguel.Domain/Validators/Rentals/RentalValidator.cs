@@ -5,10 +5,9 @@ namespace MotosAluguel.Domain.Validators.Rentals;
 
 public class RentalValidator : IRentalValidator
 {
-    private readonly IRentalValidator _validator;
 
-    public async Task<bool> ValidateAsync(Rental rental)
+    public Task<bool> ValidateAsync(Rental rental)
     {
-        return await _validator.ValidateAsync(rental);
+        return Task.FromResult(true);
     }
 }

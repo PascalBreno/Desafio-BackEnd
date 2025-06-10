@@ -5,8 +5,6 @@ namespace MotosAluguel.Domain.Validators.Motorcycles;
 
 public class MotorcyclesValidator : IMotorcyclesInsertValidator
 {
-    private readonly IMotorcyclesInsertValidator _validator;
-
     public Task<bool> ValidateAsync(Motorcycle motorcycle)
     {
         return Task.FromResult(true);

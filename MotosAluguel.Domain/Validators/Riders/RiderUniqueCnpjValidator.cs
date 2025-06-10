@@ -2,9 +2,9 @@
 using MotosAluguel.Domain.Interfaces.Repositories.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
 
-namespace MotosAluguel.Domain.Validators.Riders.RiderInsert;
+namespace MotosAluguel.Domain.Validators.Riders;
 
-public class RiderInsertUniqueCnpjValidator(
+public class RiderUniqueCnpjValidator(
     IRiderInsertValidator insertValidator,
     IRiderReaderRepository riderReaderRepository) : IRiderInsertValidator
 {
