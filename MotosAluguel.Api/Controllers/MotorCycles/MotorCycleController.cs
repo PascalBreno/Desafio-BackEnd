@@ -10,9 +10,14 @@ public class MotorCycleController : ControllerBase
 {
     private readonly IMotorcycleInsertOrchestrator _motorcycleInsertOrchestrator;
 
-    public MotorCycleController(IMotorcycleInsertOrchestrator motorcycleInsertOrchestrator)
+    private readonly IMotorcycleDeleteOrchestrator _motorcycleDeleteOrchestrator;
+
+    public MotorCycleController(
+        IMotorcycleInsertOrchestrator motorcycleInsertOrchestrator,
+        IMotorcycleDeleteOrchestrator motorcycleDeleteOrchestrator)
     {
         _motorcycleInsertOrchestrator = motorcycleInsertOrchestrator;
+        _motorcycleDeleteOrchestrator = motorcycleDeleteOrchestrator;
     }
 
     [HttpPost]
@@ -30,7 +35,7 @@ public class MotorCycleController : ControllerBase
     [HttpDelete("{Id}")]
     public async Task<IActionResult> DeleteMotorCycleById([FromRoute] string id)
     {
-        var result = await _motorcycleInsertOrchestrator.RunAsync(command);
+        var result = await _motorcycleDeleteOrchestrator.RunAsync(id);
 
         if (result.Success)
             return Created();

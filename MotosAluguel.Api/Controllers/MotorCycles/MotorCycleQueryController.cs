@@ -17,7 +17,7 @@ public class MotorCycleQueryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetMotosByFilter([FromBody] MotorcyclesByFilterQuery filter)
+    public async Task<IActionResult> GetMotosByFilter([FromQuery] MotorcyclesByFilterQuery filter)
     {
         var result = await _motorcycleQueryOrchestrator.GetMotorcyclesByFilter(filter);
 

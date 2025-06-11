@@ -12,6 +12,11 @@ public class MotorcycleQueryOrchestrator : IMotorcycleQueryOrchestrator
 {
     private readonly IMotorcyclesReadRepository _repository;
 
+    public MotorcycleQueryOrchestrator(IMotorcyclesReadRepository repository)
+    {
+        _repository = repository;
+    }
+
     public async Task<OperationResult<MotorcycleResponse>> 
         GetMotorcycleByIdAsync(string id)
     {

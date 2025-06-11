@@ -6,20 +6,31 @@ using MotosAluguel.Infra.Repositories.Base;
 
 namespace MotosAluguel.Infra.Repositories.Motorcyles;
 
-public class MotorcyclesReaderRepository(IConfiguration configuration) : BaseReadRepository(configuration), IMotorcyclesReadRepository
+public class MotorcyclesReaderRepository(IConfiguration configuration) 
+    : BaseReadRepository(configuration), IMotorcyclesReadRepository
 {
-    public Task<bool> ExistById(string id)
+    public async Task<bool> ExistById(string id)
     {
-        throw new NotImplementedException();
+        string sql = @"Select Count(*) from Motorcycles
+                       Where Id = @Id;";
+
+        using var connection = GetConnection();
+
+        var parameters = new { Id = id };
+        var result = await connection.QuerySingleAsync<int>(sql, id);
+
+        return result > 0;
     }
+    
 
     public async Task<bool> ExistByPlateAsync(string plate)
     {
         using var connection = GetConnection();
 
-        const string sql = "SELECT COUNT(1) FROM Motorcycles WHERE Plate = @Plate";
+        const string sql = "SELECT COUNT(*) FROM Motorcycles WHERE Plate = @Plate";
 
-        var count = await connection.ExecuteScalarAsync<int>(sql, new { Plate = plate });
+        var parameters = new { Plate = plate };
+        var count = await connection.ExecuteScalarAsync<int>(sql, parameters);
 
         return count > 0;
 
@@ -32,7 +43,21 @@ public class MotorcyclesReaderRepository(IConfiguration configuration) : BaseRea
 
         using var connection = GetConnection();
 
-        var result = await connection.QuerySingleAsync<Motorcycle>(sql, id);
+        var parameters = new { Id = id };
+        var result = await connection.QuerySingleAsync<Motorcycle>(sql, parameters);
+
+        return result;
+    }
+
+    public async Task<IEnumerable<Motorcycle>> GetByPlateAsync(string plate)
+    {
+        string sql = @"Select * from Motorcycles
+                       Where Plate like @plate;";
+
+        using var connection = GetConnection();
+
+        var parameters = new { Plate = $"%{plate}%" };
+        var result = await connection.QueryAsync<Motorcycle>(sql, parameters);
 
         return result;
     }
@@ -44,7 +69,8 @@ public class MotorcyclesReaderRepository(IConfiguration configuration) : BaseRea
 
         using var connection = GetConnection();
 
-        var result = await connection.QuerySingleAsync<string>(sql, id);
+        var parameters = new { Id = id};
+        var result = await connection.QuerySingleAsync<string>(sql, parameters);
 
         return result;
     }

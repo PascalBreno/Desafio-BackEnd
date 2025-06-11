@@ -8,19 +8,40 @@ namespace MotosAluguel.Infra.Repositories.Riders;
 
 public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepository(configuration), IRiderReaderRepository
 {
-    public Task<bool> ExistByCnh(string cnh)
+    public async Task<bool> ExistByCnh(string cnh)
     {
-        throw new NotImplementedException();
+        string sql = @"Select top 1 Count(*) from Riders
+                       Where Cnh = @Cnh;";
+            
+        using var connection = GetConnection();
+
+        var result = await connection.QuerySingleAsync<int>(sql, cnh);
+
+        return result > 0;
     }
 
-    public Task<bool> ExistByCnpj(string cnpj)
+    public async Task<bool> ExistByCnpj(string cnpj)
     {
-        throw new NotImplementedException();
+        string sql = @"Select top 1 Count(1) from Riders
+                       Where Cnpj = @cnpj;";
+
+        using var connection = GetConnection();
+
+        var result = await connection.QuerySingleAsync<int>(sql, cnpj);
+
+        return result > 0;
     }
 
-    public Task<bool> ExistById(string id)
+    public async Task<bool> ExistById(string id)
     {
-        throw new NotImplementedException();
+        string sql = @"Select Count(1) from Riders
+                       Where Id = @Id;";
+
+        using var connection = GetConnection();
+
+        var result = await connection.QuerySingleAsync<int>(sql, id);
+
+        return result > 0;
     }
 
     public async Task<Rider> GetByIdAsync(string id)

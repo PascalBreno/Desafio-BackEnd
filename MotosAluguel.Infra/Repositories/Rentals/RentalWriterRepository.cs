@@ -16,7 +16,7 @@ public class RentalWriterRepository : IRentalWriterRepository
 
     public async Task<Guid> InsertAsync(Rental rental)
     {
-        string sql = @"INSERT INTO Rental 
+        string sql = @"INSERT INTO Rentals 
                      (RiderId, MotorCycleId, BeginAt, EndAt, EstimatedEndDate, Plan)
                      VALUES (@RiderId, @MotorCycleId, @BeginAt, @EndAt, @EstimatedEndDate, @Plan)
                      RETURNING Id;";
