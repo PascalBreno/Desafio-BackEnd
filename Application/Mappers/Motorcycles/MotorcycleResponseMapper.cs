@@ -1,4 +1,4 @@
-﻿using MotosAluguel.Application.Commons.Response;
+﻿using MotosAluguel.Application.Commons.Response.Motorcycles;
 using MotosAluguel.Domain.Entities.MotorCycles;
 
 namespace MotosAluguel.Application.Mappers.Motorcycles;

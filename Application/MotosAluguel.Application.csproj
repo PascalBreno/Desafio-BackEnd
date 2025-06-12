@@ -9,4 +9,8 @@
     <ProjectReference Include="..\MotosAluguel.Domain\MotosAluguel.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commons\Response\Riders\" />
+  </ItemGroup>
+
 </Project>

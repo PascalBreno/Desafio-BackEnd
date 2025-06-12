@@ -5,5 +5,5 @@ namespace MotosAluguel.Application.Interfaces.Orchestrators.Riders;
 
 public interface IRiderInsertCnhOrchestrator
 {
-    Task<OperationResult<string>> RunAsync(RiderInsertCommand command);
+    Task<OperationResult<string>> RunAsync(string id, RiderInsertCnhCommand command);
 }

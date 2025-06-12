@@ -25,7 +25,7 @@ public class MotorCycleQueryController : ControllerBase
             return Ok(result.Data);
 
         else
-            return BadRequest(result.Error);
+            return BadRequest(result.Message);
     }
 
     [HttpGet("{id}")]
@@ -37,6 +37,6 @@ public class MotorCycleQueryController : ControllerBase
             return Ok(result.Data);
 
         else
-            return BadRequest(result.Error);
+            return BadRequest(result.Message);
     }
 }

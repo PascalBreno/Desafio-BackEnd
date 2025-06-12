@@ -1,5 +1,5 @@
 ﻿using MotosAluguel.Application.Commons;
-using MotosAluguel.Application.Commons.Response;
+using MotosAluguel.Application.Commons.Response.Motorcycles;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Application.Mappers.Motorcycles;
 using MotosAluguel.Application.Querys.Motorcycles;

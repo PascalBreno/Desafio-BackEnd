@@ -1,7 +1,7 @@
 ﻿using MotosAluguel.Domain.Entities.MotorCycles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 
-namespace MotosAluguel.Domain.Validators.Motorcycles;
+namespace MotosAluguel.Domain.Validators.Motorcycles.Insert;
 
 public class MotorcyclesValidator : IMotorcyclesInsertValidator
 {

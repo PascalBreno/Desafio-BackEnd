@@ -44,7 +44,8 @@ public class MotorcyclesReaderRepository(IConfiguration configuration)
         using var connection = GetConnection();
 
         var parameters = new { Id = id };
-        var result = await connection.QuerySingleAsync<Motorcycle>(sql, parameters);
+
+        var result = await connection.QuerySingleOrDefaultAsync<Motorcycle>(sql, parameters);
 
         return result;
     }

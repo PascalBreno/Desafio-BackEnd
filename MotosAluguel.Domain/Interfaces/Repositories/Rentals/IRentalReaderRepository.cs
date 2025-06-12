@@ -7,4 +7,6 @@ public interface IRentalReaderRepository
     Task<Rental> GetByIdAsync(string id);
 
     Task<bool> ExistById(string id);
+
+    Task<bool> ExistAnyRentalByMotorcycleId(string motorcycleId);
 }

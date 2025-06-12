@@ -15,9 +15,18 @@ public class MotorcycleWriterRepository : IMotorcycleWriterRepository
         _dbConnection = dbConnection;
     }
 
-    public Task DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        string sql = @"DELETE FROM Motorcycles 
+                       WHERE Id = @Id";
+
+        var parameters = new { Id = id};
+
+        using var connection = _dbConnection.CreateConnection();
+
+        var rowsAffected = await connection.ExecuteAsync(sql, parameters);
+
+        return rowsAffected > 0;
     }
 
     public async Task<string> InsertAsync(Motorcycle motorCycle)

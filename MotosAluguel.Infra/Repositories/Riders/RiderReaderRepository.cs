@@ -10,24 +10,25 @@ public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepos
 {
     public async Task<bool> ExistByCnh(string cnh)
     {
-        string sql = @"Select top 1 Count(*) from Riders
-                       Where Cnh = @Cnh;";
+        string sql = @"SELECT COUNT(*) FROM Riders
+                       WHERE Cnh = @Cnh;";
             
         using var connection = GetConnection();
-
-        var result = await connection.QuerySingleAsync<int>(sql, cnh);
+        var parameters = new { Cnh = cnh };
+        var result = await connection.QuerySingleAsync<int>(sql, parameters);
 
         return result > 0;
     }
 
     public async Task<bool> ExistByCnpj(string cnpj)
     {
-        string sql = @"Select top 1 Count(1) from Riders
-                       Where Cnpj = @cnpj;";
+        string sql = @"SELECT COUNT(*) FROM Riders
+                       WHERE Cnpj = @cnpj;";
 
         using var connection = GetConnection();
 
-        var result = await connection.QuerySingleAsync<int>(sql, cnpj);
+        var parameters = new { Cnpj = cnpj };
+        var result = await connection.QuerySingleAsync<int>(sql, parameters);
 
         return result > 0;
     }

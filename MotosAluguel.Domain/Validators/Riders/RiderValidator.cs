@@ -5,15 +5,8 @@ namespace MotosAluguel.Domain.Validators.Riders;
 
 public class RiderValidator : IRiderInsertValidator
 {
-    private readonly IRiderInsertValidator _validator;
-
-    public RiderValidator(IRiderInsertValidator validator)
+    public Task<bool> ValidateAsync(Rider entity)
     {
-        _validator = validator;
-    }
-
-    public async Task<bool> ValidateAsync(Rider entity)
-    {
-        return await _validator.ValidateAsync(entity);
+        return Task.FromResult(true);
     }
 }

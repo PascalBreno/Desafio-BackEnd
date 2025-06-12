@@ -2,7 +2,7 @@
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 
-namespace MotosAluguel.Domain.Validators.Motorcycles;
+namespace MotosAluguel.Domain.Validators.Motorcycles.Insert;
 
 public class MotorcyclesUniquePlateValidator(
     IMotorcyclesInsertValidator validator,

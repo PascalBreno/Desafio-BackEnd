@@ -8,9 +8,21 @@ namespace MotosAluguel.Infra.Repositories.Rentals;
 
 public class RentalReaderRepository(IConfiguration configuration) : BaseReadRepository(configuration), IRentalReaderRepository
 {
+    public async Task<bool> ExistAnyRentalByMotorcycleId(string motorcycleId)
+    {
+        string sql = @"Select Count(*) from Rentals
+                       Where MotorcycleId = @Id;";
+
+        using var connection = GetConnection();
+
+        var result = await connection.QuerySingleAsync<int>(sql, new {Id = motorcycleId });
+
+        return result > 0;
+    }
+
     public async Task<bool> ExistById(string id)
     {
-        string sql = @"Select Count(1) from Rentals
+        string sql = @"Select Count(*) from Rentals
                        Where Id = @Id;";
 
         using var connection = GetConnection();

@@ -10,4 +10,9 @@ public class RiderInsertCnhOrchestrator : IRiderInsertCnhOrchestrator
     {
         throw new NotImplementedException();
     }
+
+    public Task<OperationResult<string>> RunAsync(string id, RiderInsertCnhCommand command)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -18,12 +18,22 @@ public class RiderWriterRepository : IRiderWriterRepository
     {
         string sql = @"INSERT INTO Riders 
                        (Id, Name, Cnpj, BirthDate, Cnh, CnhType)
-                       VALUES (@Id, @Name, @Cnpj, @BirthDate, @Cnh, @CnhType);
+                       VALUES (@Id, @Name, @Cnpj, @BirthDate, @Cnh, @CnhType)
                        RETURNING Id";
 
         using var connection = _dbConnection.CreateConnection();
 
-        var result = await connection.QuerySingleAsync<string>(sql, rider);
+        var parameters = new
+        {
+            rider.Id,
+            rider.Name,
+            rider.Cnpj,
+            rider.BirthDate,
+            rider.Cnh,
+            rider.CnhType
+        };
+
+        var result = await connection.QuerySingleAsync<string>(sql, parameters);
 
         return result;
 

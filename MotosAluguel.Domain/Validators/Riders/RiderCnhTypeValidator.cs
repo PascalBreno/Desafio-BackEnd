@@ -3,14 +3,22 @@ using MotosAluguel.Domain.Interfaces.Validators.Riders;
 
 namespace MotosAluguel.Domain.Validators.Riders;
 
-public class RiderCnhTypeValidator(
-    IRiderInsertValidator insertValidator) : IRiderInsertValidator
+public class RiderCnhTypeValidator : IRiderInsertValidator
 {
-    private readonly IRiderInsertValidator _insertValidator = insertValidator;
+    private readonly IRiderInsertValidator _insertValidator;
+
+    public RiderCnhTypeValidator(IRiderInsertValidator insertValidator)
+    {
+        _insertValidator = insertValidator;
+    }
 
     public async Task<bool> ValidateAsync(Rider rider)
     {
+        Console.WriteLine("Entrou no RiderCnhTypeValidator!");
+
         var isValid = await _insertValidator.ValidateAsync(rider);
+
+        Console.WriteLine("Finalizou validação básica!");
 
         if (isValid)
         {

@@ -12,16 +12,18 @@ public class MotorcycleWriterRepositoryWithErrorHandler : IMotorcycleWriterRepos
         _motorCycleWriterRepository = motorCycleWriterRepository;
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(string id)
     {
         try
         {
             await _motorCycleWriterRepository.DeleteAsync(id);
+
+            return true;
         }
 
         catch (Exception ex)
         {
-            throw new Exception("An error occurred while deleting the motor cycle.", ex);
+            return false;
         }
     }
 
@@ -38,8 +40,16 @@ public class MotorcycleWriterRepositoryWithErrorHandler : IMotorcycleWriterRepos
         }
     }
 
-    public Task<bool> UpdatePlateAsync(string id, string plate)
+    public async Task<bool> UpdatePlateAsync(string id, string plate)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _motorCycleWriterRepository.UpdatePlateAsync(id, plate);
+        }
+
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while updating the plate motor cycle.", ex);
+        }
     }
 }

@@ -4,17 +4,27 @@ using MotosAluguel.Domain.Interfaces.Validators.Riders;
 
 namespace MotosAluguel.Domain.Validators.Riders;
 
-public class RiderUniqueCnhValidator(
-    IRiderInsertValidator insertValidator,
-    IRiderReaderRepository riderReaderRepository) : IRiderInsertValidator
+public class RiderUniqueCnhValidator : IRiderInsertValidator
 {
-    private readonly IRiderInsertValidator _insertValidator = insertValidator;
+    private readonly IRiderInsertValidator _insertValidator;
 
-    private readonly IRiderReaderRepository _riderReaderRepository = riderReaderRepository;
+    private readonly IRiderReaderRepository _riderReaderRepository;
+
+    public RiderUniqueCnhValidator(
+        IRiderReaderRepository riderReaderRepository,
+        IRiderInsertValidator insertValidator)
+    {
+        _riderReaderRepository = riderReaderRepository;
+        _insertValidator = insertValidator;
+    }
 
     public async Task<bool> ValidateAsync(Rider rider)
     {
+        Console.WriteLine("Entrou no RiderUniqueCnpjValidator!");
+
         var isValid = await _insertValidator.ValidateAsync(rider);
+
+        Console.WriteLine("Finalizou validação básica!");
 
         if (isValid)
         {

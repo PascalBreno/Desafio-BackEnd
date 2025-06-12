@@ -3,7 +3,7 @@
 CREATE TABLE Riders (
     Id VARCHAR(50) PRIMARY KEY,
     CNPJ VARCHAR(18) NOT NULL UNIQUE,
-    "Name" VARCHAR(100) NOT NULL,
+    Name VARCHAR(100) NOT NULL,
     CNH VARCHAR(20) NOT NULL UNIQUE,
     CnhType VARCHAR(50) NOT NULL,
     BirthDate TIMESTAMP NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE Riders (
 -- Cria tabela para as motos
 CREATE TABLE MotorCycles(
     Id VARCHAR(50) PRIMARY KEY,
-    "Year" VARCHAR(18) NOT NULL,
+    "year" VARCHAR(18) NOT NULL,
     Model VARCHAR(100) NOT NULL,
     Plate VARCHAR(20) NOT NULL UNIQUE,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -33,8 +33,9 @@ CREATE TABLE Rentals (
     BeginAt TIMESTAMP NOT NULL,      
     EndAt TIMESTAMP NULL,            
     EstimatedEndDate TIMESTAMP NOT NULL, 
-    "Plan" INT NOT NULL,
+    "plan" INT NOT NULL,
     ValueRental BIGINT NOT NULL, 
+    ReceivedDate TIMESTAMP NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     UpdatedAt TIMESTAMP NULL,
     DeletedAt TIMESTAMP NULL,

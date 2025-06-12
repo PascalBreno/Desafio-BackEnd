@@ -10,7 +10,8 @@ using MotosAluguel.Domain.Interfaces.Repositories.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Validators.Rentals;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
-using MotosAluguel.Domain.Validators.Motorcycles;
+using MotosAluguel.Domain.Validators.Motorcycles.Delete;
+using MotosAluguel.Domain.Validators.Motorcycles.Insert;
 using MotosAluguel.Domain.Validators.Rentals;
 using MotosAluguel.Domain.Validators.Riders;
 using MotosAluguel.Infra.DbContext;
@@ -26,9 +27,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IMotorcyclesInsertValidator, MotorcyclesValidator>();
 builder.Services.Decorate<IMotorcyclesInsertValidator, MotorcyclesUniquePlateValidator>();
 
+builder.Services.AddSingleton<IMotorcycleDeleteValidator, MotorcycleDeleteValidator>();
+builder.Services.Decorate<IMotorcycleDeleteValidator, MotorcycleExistAnyRental>();
+
 builder.Services.AddSingleton<IRiderInsertValidator, RiderValidator>();
 builder.Services.Decorate<IRiderInsertValidator, RiderUniqueCnhValidator>();
-builder.Services.Decorate<IRiderInsertValidator, RiderUniqueCnhValidator>();
+builder.Services.Decorate<IRiderInsertValidator, RiderUniqueCnpjValidator>();
 builder.Services.Decorate<IRiderInsertValidator, RiderCnhTypeValidator>();
 
 builder.Services.AddSingleton<IRentalValidator, RentalValidator>();
@@ -60,6 +64,7 @@ builder.Services.AddSingleton<IRiderInsertCnhOrchestrator, RiderInsertCnhOrchest
 
 builder.Services.AddSingleton<IRentalMotorcycleProcessOrchestrator, RentalMotorcycleProcessOrchestrator>();
 builder.Services.AddSingleton<IRentalSettlementOrchestrator, RentalSettlementOrchestrator>();
+builder.Services.AddSingleton<IRentalQueryOrchestrator, RentalQueryOrchestrator>();
 
 
 builder.Services.AddControllers();
