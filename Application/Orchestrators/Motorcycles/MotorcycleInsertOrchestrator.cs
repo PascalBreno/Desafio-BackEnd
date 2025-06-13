@@ -45,7 +45,16 @@ public class MotorcycleInsertOrchestrator(
                 Plate = entity.Plate
             };
 
-            await _publishEndpoint.Publish(registeredEvent);
+            try
+            {
+                await _publishEndpoint.Publish(registeredEvent);
+
+                _logger.Information("Evento de motocicleta registrada publicado com sucesso: {@Event}", registeredEvent);
+            }
+            catch(Exception ex)
+            {
+                _logger.Error("Erro ao inserir o serviço de mensageria", ex);
+            }
 
             var response = MotorcycleResponseMapper.ToResponse(entity);
 

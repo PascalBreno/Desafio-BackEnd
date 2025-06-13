@@ -29,6 +29,7 @@ using MotosAluguel.Infra.Repositories.Rentals;
 using MotosAluguel.Infra.Repositories.Riders;
 using MotosAluguel.Infra.StorageManager;
 using Npgsql;
+using Serilog;
 using System.Data;
 
 internal class Program
@@ -38,6 +39,8 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddSingleton(sp => Log.Logger);
+
         builder.Services.AddSingleton<IMotorcyclesInsertValidator, MotorcyclesValidator>();
         builder.Services.Decorate<IMotorcyclesInsertValidator, MotorcyclesUniquePlateValidator>();
         builder.Services.Decorate<IMotorcyclesInsertValidator, MotorcycleUniqueIdValidator>();
