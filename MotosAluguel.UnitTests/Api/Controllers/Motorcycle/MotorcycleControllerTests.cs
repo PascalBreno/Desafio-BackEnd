@@ -1,5 +1,4 @@
 ﻿using AutoFixture.Xunit2;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MotosAluguel.Api.Controllers.MotorCycles;
 using MotosAluguel.Application.Commands.Motorcycles;
