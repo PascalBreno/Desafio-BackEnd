@@ -93,13 +93,14 @@ internal class Program
 
         var serviceBusConnectionString = builder.Configuration["ServiceBus:ConnectionString"];
 
-
         builder.Services.AddMassTransit(x =>
         {
             x.AddConsumer<MotorcycleConsumer>();
 
             x.UsingAzureServiceBus((context, cfg) =>
             {
+                cfg.ConfigureEndpoints(context);
+
                 cfg.Host(serviceBusConnectionString);
 
                 cfg.ReceiveEndpoint("motorcycle-events", e =>
