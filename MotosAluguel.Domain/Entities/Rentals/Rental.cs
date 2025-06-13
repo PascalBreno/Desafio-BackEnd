@@ -6,6 +6,7 @@ namespace MotosAluguel.Domain.Entities.Rentals;
 
 public sealed class Rental : EntityBase
 {
+    public Guid Id { get; set; }
     public string RiderId { get; init; }
 
     public Rider Rider { get; set; }
@@ -21,4 +22,11 @@ public sealed class Rental : EntityBase
     public DateTime EstimatedEndDate { get; init; }
 
     public int Plan { get; set; }
+
+    public long Value { get; private set; }
+
+    public void WithTotalValue(long value)
+    {
+        Value = value;
+    }
 }

@@ -1,6 +1,8 @@
-﻿namespace MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+﻿using MotosAluguel.Domain.Validators.Base;
+
+namespace MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 
 public interface IMotorcycleDeleteValidator
 {
-    Task<bool> ValidateAsync(string id);
+    Task<OperationResult> ValidateAsync(string id);
 }

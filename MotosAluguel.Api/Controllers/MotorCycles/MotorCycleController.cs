@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotosAluguel.Application.Commands.Motorcycles;
-using MotosAluguel.Application.Commands.Riders;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
-using MotosAluguel.Application.Interfaces.Orchestrators.Riders;
 
 namespace MotosAluguel.Api.Controllers.MotorCycles;
 
@@ -35,7 +33,7 @@ public class MotorCycleController : ControllerBase
             return Created();
 
         else
-            return BadRequest(result.Message);    
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 
     [HttpDelete("{Id}")]
@@ -47,7 +45,7 @@ public class MotorCycleController : ControllerBase
             return Ok();
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 
     [HttpPut("{Id}/placa")]
@@ -58,9 +56,9 @@ public class MotorCycleController : ControllerBase
         var result = await _motorcycleUpdateOrchestrator.UpdatePlateAsync(Id, command);
 
         if (result.Success)
-            return Ok(result.Message);
+            return Ok(result.ErrorMessage);
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 }

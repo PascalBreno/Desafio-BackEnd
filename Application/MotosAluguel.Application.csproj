@@ -13,4 +13,8 @@
     <Folder Include="Commons\Response\Riders\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
+  </ItemGroup>
+
 </Project>

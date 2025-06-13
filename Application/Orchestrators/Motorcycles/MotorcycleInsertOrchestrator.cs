@@ -1,33 +1,52 @@
-﻿using MotosAluguel.Application.Commands.Motorcycles;
-using MotosAluguel.Application.Commons;
+﻿using MassTransit;
+using MotosAluguel.Application.Commands.Motorcycles;
+using MotosAluguel.Application.Commons.Response.Motorcycles;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Application.Mappers.Motorcycles;
+using MotosAluguel.Domain.Entities.MotorCycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+using MotosAluguel.Domain.Messaging.Events;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Motorcycles;
 
 public class MotorcycleInsertOrchestrator(
     IMotorcyclesInsertValidator validator,
-    IMotorcycleWriterRepository repository) : IMotorcycleInsertOrchestrator
+    IMotorcycleWriterRepository repository,
+    IPublishEndpoint publishEndpoint) : IMotorcycleInsertOrchestrator
 {
     private readonly IMotorcyclesInsertValidator _validator = validator;
 
     private readonly IMotorcycleWriterRepository _repository = repository;
 
-    public async Task<OperationResult<string>> RunAsync(MotorcycleInsertCommand command)
+    private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+
+    public async Task<OperationResult<MotorcycleResponse>> RunAsync(MotorcycleInsertCommand command)
     {
         var entity = MotorcycleMapper.ToEntity(command);
 
-        var isValid = await _validator.ValidateAsync(entity);
+        var operationResult = await _validator.ValidateAsync(entity);
 
-        if (isValid)
+        if (operationResult.Success)
         {
-            var result = await _repository.InsertAsync(entity);
+            await _repository.InsertAsync(entity);
 
-            return OperationResult<string>.Ok(result);
+            var registeredEvent = new MotorcycleRegisteredEvent
+            {
+                Id = entity.Id,
+                Year = entity.Year,
+                Model = entity.Model,
+                Plate = entity.Plate
+            };
+
+            await _publishEndpoint.Publish(registeredEvent);
+
+            var response = MotorcycleResponseMapper.ToResponse(entity);
+
+            return OperationResult<MotorcycleResponse>.Ok(response);
         }
 
-        return OperationResult<string>.Fail("Dados inválidos");
+        return OperationResult<MotorcycleResponse>.Fail(operationResult);
     }
 }

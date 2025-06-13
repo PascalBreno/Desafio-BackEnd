@@ -1,5 +1,5 @@
 ﻿using MotosAluguel.Application.Commands.Motorcycles;
-using MotosAluguel.Application.Commons;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 

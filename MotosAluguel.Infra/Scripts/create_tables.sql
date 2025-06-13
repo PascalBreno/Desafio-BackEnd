@@ -7,6 +7,7 @@ CREATE TABLE Riders (
     CNH VARCHAR(20) NOT NULL UNIQUE,
     CnhType VARCHAR(50) NOT NULL,
     BirthDate TIMESTAMP NOT NULL,
+    ImageCnh VARCHAR(300) NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UpdatedAt TIMESTAMP NULL,
     DeletedAt TIMESTAMP NULL,
@@ -16,7 +17,7 @@ CREATE TABLE Riders (
 -- Cria tabela para as motos
 CREATE TABLE MotorCycles(
     Id VARCHAR(50) PRIMARY KEY,
-    "year" VARCHAR(18) NOT NULL,
+    Year VARCHAR(18) NOT NULL,
     Model VARCHAR(100) NOT NULL,
     Plate VARCHAR(20) NOT NULL UNIQUE,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -27,7 +28,7 @@ CREATE TABLE MotorCycles(
 
 -- Cria tabela para a locação
 CREATE TABLE Rentals (
-    Id UUID PRIMARY KEY,      
+    Id UUID PRIMARY KEY DEFAULT gen_random_uuid(),      
     RiderId VARCHAR(50) NOT NULL,    -- Chave estrangeira para a tabela Riders
     MotorCycleId VARCHAR(50) NOT NULL, -- Chave estrangeira para a tabela Motorcycles
     BeginAt TIMESTAMP NOT NULL,      
@@ -43,6 +44,13 @@ CREATE TABLE Rentals (
 
     CONSTRAINT fk_rider FOREIGN KEY (RiderId) REFERENCES Riders(Id),
     CONSTRAINT fk_motorcycle FOREIGN KEY (MotorCycleId) REFERENCES Motorcycles(Id)
+);
+
+-- Cria tabela para o serviço de mensageria
+CREATE TABLE Notifications (
+    Id VARCHAR(50) PRIMARY KEY,      
+    Message VARCHAR(300),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 

@@ -1,13 +1,14 @@
 ﻿using MotosAluguel.Domain.Entities.Rentals;
 using MotosAluguel.Domain.Interfaces.Validators.Rentals;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Domain.Validators.Rentals;
 
 public class RentalValidator : IRentalValidator
 {
 
-    public Task<bool> ValidateAsync(Rental rental)
+    public Task<OperationResult> ValidateAsync(Rental rental)
     {
-        return Task.FromResult(true);
+        return Task.FromResult(OperationResult.Ok());
     }
 }

@@ -1,8 +1,8 @@
-﻿using MotosAluguel.Application.Commons;
+﻿using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 
 public interface IMotorcycleDeleteOrchestrator
 {
-    Task<OperationResult<bool>> RunAsync(string id);
+    Task<OperationResult> RunAsync(string id);
 }

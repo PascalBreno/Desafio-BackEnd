@@ -13,4 +13,7 @@ public class RiderInsertCommand
     public string Numero_cnh { get; set; }
 
     public string Tipo_cnh { get; set; }
+
+    public string Imagem_cnh { get; init; }
+
 }

@@ -11,4 +11,6 @@ public interface IRiderReaderRepository
     Task<bool> ExistByCnpj(string cnpj);
 
     Task<bool> ExistById(string id);
+
+    Task<string> GetCnhTypeById(string id);
 }

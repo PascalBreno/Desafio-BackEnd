@@ -11,7 +11,7 @@ public class RentalReaderRepository(IConfiguration configuration) : BaseReadRepo
     public async Task<bool> ExistAnyRentalByMotorcycleId(string motorcycleId)
     {
         string sql = @"Select Count(*) from Rentals
-                       Where MotorcycleId = @Id;";
+                       Where MotorcycleId = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
@@ -23,7 +23,7 @@ public class RentalReaderRepository(IConfiguration configuration) : BaseReadRepo
     public async Task<bool> ExistById(string id)
     {
         string sql = @"Select Count(*) from Rentals
-                       Where Id = @Id;";
+                       Where Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
@@ -36,7 +36,7 @@ public class RentalReaderRepository(IConfiguration configuration) : BaseReadRepo
     public async Task<Rental> GetByIdAsync(string id)
     {
         string sql = @"Select * from Rentals
-                       Where Id = @Id;";
+                       Where Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 

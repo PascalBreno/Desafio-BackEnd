@@ -1,10 +1,9 @@
-﻿using MotosAluguel.Application.Commands.Motorcycles;
-using MotosAluguel.Application.Commands.Riders;
-using MotosAluguel.Application.Commons;
+﻿using MotosAluguel.Application.Commands.Riders;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Interfaces.Orchestrators.Riders;
 
 public interface IRiderInsertOrchestrator
 {
-    Task<OperationResult<string>> RunAsync(RiderInsertCommand command);
+    Task<OperationResult> RunAsync(RiderInsertCommand command);
 }

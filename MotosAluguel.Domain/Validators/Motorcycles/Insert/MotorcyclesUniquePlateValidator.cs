@@ -1,6 +1,7 @@
 ﻿using MotosAluguel.Domain.Entities.MotorCycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Domain.Validators.Motorcycles.Insert;
 
@@ -12,17 +13,18 @@ public class MotorcyclesUniquePlateValidator(
 
     private readonly IMotorcyclesReadRepository _motorcycleReadRepository = motorcycleReadRepository;
 
-    public async Task<bool> ValidateAsync(Motorcycle motorcycle)
+    public async Task<OperationResult> ValidateAsync(Motorcycle motorcycle)
     {
-        var isValid = await _validator.ValidateAsync(motorcycle);
+        var operationResult = await _validator.ValidateAsync(motorcycle);
 
-        if (isValid) {
-            if (await _motorcycleReadRepository.ExistByPlateAsync(motorcycle.Plate))
-                return false;
+        if (operationResult.Success)
+        {
+            var existMotorcycle = await _motorcycleReadRepository.ExistByPlateAsync(motorcycle.Plate);
 
-            return true;
+            if (existMotorcycle)
+                return OperationResult.Fail("Placa já existe.");
         }
 
-        return isValid;
+        return operationResult;
     }
 }

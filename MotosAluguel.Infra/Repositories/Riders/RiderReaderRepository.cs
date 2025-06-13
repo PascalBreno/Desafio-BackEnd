@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MotosAluguel.Domain.Entities.Riders;
 using MotosAluguel.Domain.Interfaces.Repositories.Riders;
+using MotosAluguel.Domain.Validators.Base;
 using MotosAluguel.Infra.Repositories.Base;
 
 namespace MotosAluguel.Infra.Repositories.Riders;
@@ -11,7 +12,7 @@ public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepos
     public async Task<bool> ExistByCnh(string cnh)
     {
         string sql = @"SELECT COUNT(*) FROM Riders
-                       WHERE Cnh = @Cnh;";
+                       WHERE Cnh = @Cnh AND IsDeleted = false;";
             
         using var connection = GetConnection();
         var parameters = new { Cnh = cnh };
@@ -23,7 +24,7 @@ public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepos
     public async Task<bool> ExistByCnpj(string cnpj)
     {
         string sql = @"SELECT COUNT(*) FROM Riders
-                       WHERE Cnpj = @cnpj;";
+                       WHERE Cnpj = @cnpj AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
@@ -35,12 +36,13 @@ public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepos
 
     public async Task<bool> ExistById(string id)
     {
-        string sql = @"Select Count(1) from Riders
-                       Where Id = @Id;";
+        string sql = @"SELECT COUNT(*) FROM Riders
+                       WHERE Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
-        var result = await connection.QuerySingleAsync<int>(sql, id);
+        var parameters = new { Id = id };
+        var result = await connection.QuerySingleAsync<int>(sql, parameters);
 
         return result > 0;
     }
@@ -48,11 +50,25 @@ public class RiderReaderRepository(IConfiguration configuration) : BaseReadRepos
     public async Task<Rider> GetByIdAsync(string id)
     {
         string sql = @"Select * from Riders
-                       Where Id = @Id;";
+                       Where Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
         var result = await connection.QuerySingleAsync<Rider>(sql, id);
+
+        return result;
+    }
+
+    public async Task<string> GetCnhTypeById(string id)
+    {
+        string sql = @"SELECT CnhType FROM Riders
+                       WHERE Id = @Id AND IsDeleted = false;";
+
+        using var connection = GetConnection();
+
+        var parameters = new { Id = id };
+
+        var result = await connection.QuerySingleAsync<string>(sql, parameters);
 
         return result;
     }

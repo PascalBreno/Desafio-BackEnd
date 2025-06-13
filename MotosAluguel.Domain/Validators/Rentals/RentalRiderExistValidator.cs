@@ -1,6 +1,7 @@
 ﻿using MotosAluguel.Domain.Entities.Rentals;
 using MotosAluguel.Domain.Interfaces.Repositories.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Rentals;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Domain.Validators.Rentals;
 
@@ -18,18 +19,18 @@ public class RentalRiderExistValidator : IRentalValidator
         _riderReaderRepository = motorcycleReadRepository;
     }
 
-    public async Task<bool> ValidateAsync(Rental rental)
+    public async Task<OperationResult> ValidateAsync(Rental rental)
     {
-        var isValid = await _validator.ValidateAsync(rental);
+        var operationResult = await _validator.ValidateAsync(rental);
 
-        if (isValid)
+        if (operationResult.Success)
         {
-            if (!await _riderReaderRepository.ExistById(rental.RiderId))
-                return false;
+            var existRider = await _riderReaderRepository.ExistById(rental.RiderId);
 
-            return true;
+            if (!existRider)
+                return OperationResult.Fail("Piloto não cadastrado");
         }
 
-        return isValid;
+        return operationResult;
     }
 }

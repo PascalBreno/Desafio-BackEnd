@@ -14,6 +14,38 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./MotosAluguel.Infra/Scripts:/docker-entrypoint-initdb.d
+    networks:
+      - motos-network
+
+  servicebus-emulator:
+    container_name: servicebus-emulator
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    pull_policy: always
+    ports:
+      - "5672:5672" 
+      - "5300:5300" 
+    environment:
+      ACCEPT_EULA: "Y"
+      SQL_SERVER: "sqledge"
+      MSSQL_SA_PASSWORD: "admin123!"
+    depends_on:
+      - sqledge
+    networks:
+      - motos-network
+
+  sqledge:
+    container_name: sqledge
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "admin123!"
+    networks:
+      - motos-network
+
+networks:
+  motos-network:
 
 volumes:
   postgres-data:

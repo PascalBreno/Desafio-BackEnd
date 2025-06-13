@@ -1,6 +1,6 @@
 ﻿using MotosAluguel.Application.Commands.Rentals;
-using MotosAluguel.Application.Commons;
 using MotosAluguel.Application.Interfaces.Orchestrators.Rentals;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Rentals;
 

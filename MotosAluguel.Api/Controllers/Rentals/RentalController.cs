@@ -26,21 +26,21 @@ public class RentalController : ControllerBase
         var result = await _rentalMotorcycleProcessOrchestrator.RunAsync(command);
 
         if (result.Success)
-            return Ok(result.Message);
+            return Ok();
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> CompleteRental(RentalSettlementCommand command)
+    [HttpPut("{Id}")]
+    public async Task<IActionResult> CompleteRental([FromRoute] string Id, [FromBody] RentalSettlementCommand command)
     {
         var result = await _rentalSettlementOrchestrator.RunAsync(command);
 
         if (result.Success)
-            return Ok(result.Message);
+            return Ok(result.ErrorMessage);
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 }

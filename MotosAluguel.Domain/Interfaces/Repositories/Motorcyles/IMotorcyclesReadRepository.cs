@@ -11,6 +11,4 @@ public interface IMotorcyclesReadRepository
     Task<bool> ExistByPlateAsync(string plate);
 
     Task<bool> ExistById(string id);
-
-    Task<string> GetCnhById(string id);
 }

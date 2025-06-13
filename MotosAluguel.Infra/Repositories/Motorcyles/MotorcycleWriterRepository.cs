@@ -17,8 +17,10 @@ public class MotorcycleWriterRepository : IMotorcycleWriterRepository
 
     public async Task<bool> DeleteAsync(string id)
     {
-        string sql = @"DELETE FROM Motorcycles 
-                       WHERE Id = @Id";
+        string sql = @"UPDATE MotorCycles
+                            SET IsDeleted = true,
+                                DeletedAt = CURRENT_TIMESTAMP
+                            WHERE Id = @Id AND IsDeleted = FALSE";
 
         var parameters = new { Id = id};
 
@@ -32,7 +34,7 @@ public class MotorcycleWriterRepository : IMotorcycleWriterRepository
     public async Task<string> InsertAsync(Motorcycle motorCycle)
     {
         string sql = @"INSERT INTO MotorCycles 
-                       (Id, ""Year"", Model, Plate, CreatedAt) 
+                       (Id, Year, Model, Plate, CreatedAt) 
                        VALUES (@Id, @Year, @Model, @Plate, @CreatedAt)
                        RETURNING Id";
 

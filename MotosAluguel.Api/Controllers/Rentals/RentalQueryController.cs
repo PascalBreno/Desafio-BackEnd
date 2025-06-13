@@ -20,14 +20,10 @@ public class RentalQueryController : ControllerBase
         var result = await _rentalQueryOrchestrator.GetById(rentalId);
 
         if (result.Success)
-
-            if(result.Data is null)
-                return NotFound("Locação não encontrada");
-
-            else
-                return Ok(result.Data);
+            return Ok(result.Data);
 
         else
-            return NotFound(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
+
     }
 }

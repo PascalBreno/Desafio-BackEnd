@@ -23,4 +23,16 @@ public class RiderWriterRepositoryWithErrorHandler : IRiderWriterRepository
             throw new Exception("An error occurred while inserting the rider", ex);
         }
     }
+
+    public async Task UpdateImageCnhASync(string id, string imageCnhUrl)
+    {
+        try
+        {
+            await _riderWriterRepository.UpdateImageCnhASync(id, imageCnhUrl);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while inserting the rider", ex);
+        }
+    }
 }

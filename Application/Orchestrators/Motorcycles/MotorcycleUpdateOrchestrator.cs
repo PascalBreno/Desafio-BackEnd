@@ -1,7 +1,7 @@
 ﻿using MotosAluguel.Application.Commands.Motorcycles;
-using MotosAluguel.Application.Commons;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Motorcycles;
 

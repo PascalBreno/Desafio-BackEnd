@@ -14,7 +14,7 @@ public class RiderMapper
             Cnpj = command.Cnpj,
             BirthDate = command.Data_Nascimento,
             Cnh = command.Numero_cnh,
-            CnhType = command.Tipo_cnh,
+            CnhType = command.Tipo_cnh
         };
     }
 }

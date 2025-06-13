@@ -24,22 +24,24 @@ public class RiderController : ControllerBase
     public async Task<IActionResult> InsertRider([FromBody] RiderInsertCommand command)
     {
         var result = await _riderInsertOrchestrator.RunAsync(command);
-
+            
         if (result.Success)
-            return Ok(result.Message);
+            return Created();
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
+
     }
 
     [HttpPost("{id}/cnh")]
     public async Task<IActionResult> InsertRiderCnh([FromRoute] string id, [FromBody] RiderInsertCnhCommand command)
     {
         var result = await _riderInsertCnhOrchestrator.RunAsync(id, command);
+
         if (result.Success)
-            return CreatedAtAction(nameof(InsertRiderCnh), new { id = result.Data });
+            return Ok();
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 }

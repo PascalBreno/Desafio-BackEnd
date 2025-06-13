@@ -1,16 +1,17 @@
-﻿using MotosAluguel.Application.Commands.Rentals;
-using MotosAluguel.Application.Commons;
+﻿using MotosAluguel.Application.Calculators;
+using MotosAluguel.Application.Commands.Rentals;
 using MotosAluguel.Application.Interfaces.Orchestrators.Rentals;
 using MotosAluguel.Application.Mappers.Rentals;
 using MotosAluguel.Domain.Interfaces.Repositories.Rentals;
 using MotosAluguel.Domain.Interfaces.Validators.Rentals;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Rentals;
 
 public class RentalMotorcycleProcessOrchestrator : IRentalMotorcycleProcessOrchestrator
 {
-
     private readonly IRentalValidator _validator;
+
     private readonly IRentalWriterRepository _repository;
 
     public RentalMotorcycleProcessOrchestrator(
@@ -25,14 +26,19 @@ public class RentalMotorcycleProcessOrchestrator : IRentalMotorcycleProcessOrche
     {
         var entity = RentalMapper.ToEntity(command);
 
-        var isValid = await _validator.ValidateAsync(entity);
+        var operationResult = await _validator.ValidateAsync(entity);
 
-        if( isValid )
+        if(operationResult.Success)
         {
+            var valueAmount = RentalPricingCalculator.CalculateRentalCost(entity);
+
+            entity.WithTotalValue(valueAmount);
+
             var result = await _repository.InsertAsync(entity);
+
             return OperationResult<Guid>.Ok(result);
         }
 
-        return OperationResult<Guid>.Fail("Dados inválidos para o processo de locação");
+        return OperationResult<Guid>.Fail(operationResult);
     }
 }

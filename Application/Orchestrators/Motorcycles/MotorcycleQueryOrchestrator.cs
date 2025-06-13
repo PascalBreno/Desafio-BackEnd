@@ -1,10 +1,10 @@
-﻿using MotosAluguel.Application.Commons;
-using MotosAluguel.Application.Commons.Response.Motorcycles;
+﻿using MotosAluguel.Application.Commons.Response.Motorcycles;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Application.Mappers.Motorcycles;
 using MotosAluguel.Application.Querys.Motorcycles;
 using MotosAluguel.Domain.Entities.MotorCycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Motorcycles;
 

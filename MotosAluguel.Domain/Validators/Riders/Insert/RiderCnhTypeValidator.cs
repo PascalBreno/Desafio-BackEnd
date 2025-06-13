@@ -1,7 +1,8 @@
 ﻿using MotosAluguel.Domain.Entities.Riders;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
+using MotosAluguel.Domain.Validators.Base;
 
-namespace MotosAluguel.Domain.Validators.Riders;
+namespace MotosAluguel.Domain.Validators.Riders.Insert;
 
 public class RiderCnhTypeValidator : IRiderInsertValidator
 {
@@ -12,23 +13,17 @@ public class RiderCnhTypeValidator : IRiderInsertValidator
         _insertValidator = insertValidator;
     }
 
-    public async Task<bool> ValidateAsync(Rider rider)
+    public async Task<OperationResult> ValidateAsync(Rider rider)
     {
-        Console.WriteLine("Entrou no RiderCnhTypeValidator!");
+        var operationResult = await _insertValidator.ValidateAsync(rider);
 
-        var isValid = await _insertValidator.ValidateAsync(rider);
-
-        Console.WriteLine("Finalizou validação básica!");
-
-        if (isValid)
+        if (operationResult.Success)
         {
-            if (CnhTypeIsValid(rider.Cnh))
-                return false;
-
-            return true;
+            if (!CnhTypeIsValid(rider.CnhType))
+                return OperationResult.Fail("Tipo de CNH inválido.");
         }
 
-        return isValid;
+        return operationResult;
     }
 
     private static bool CnhTypeIsValid(string cnh)

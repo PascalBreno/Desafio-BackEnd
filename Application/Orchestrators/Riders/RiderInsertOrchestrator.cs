@@ -1,9 +1,10 @@
 ﻿using MotosAluguel.Application.Commands.Riders;
-using MotosAluguel.Application.Commons;
 using MotosAluguel.Application.Interfaces.Orchestrators.Riders;
 using MotosAluguel.Application.Mappers.Riders;
 using MotosAluguel.Domain.Interfaces.Repositories.Riders;
+using MotosAluguel.Domain.Interfaces.StorageManager;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Riders;
 
@@ -13,27 +14,32 @@ public class RiderInsertOrchestrator : IRiderInsertOrchestrator
 
     private readonly IRiderWriterRepository _repository;
 
+    private readonly ILocalStorageService _localStorageService;
     public RiderInsertOrchestrator(
         IRiderInsertValidator validator,
-        IRiderWriterRepository repository)
+        IRiderWriterRepository repository,
+        ILocalStorageService localStorageService)
     {
         _validator = validator;
         _repository = repository;
+        _localStorageService = localStorageService;
     }
 
-    public async Task<OperationResult<string>> RunAsync(RiderInsertCommand command)
+    public async Task<OperationResult> RunAsync(RiderInsertCommand command)
     {
         var entity = RiderMapper.ToEntity(command);
 
-        var isValid = await _validator.ValidateAsync(entity);
+        var operationResult = await _validator.ValidateAsync(entity);
 
-        if (isValid)
+        if (operationResult.Success)
         {
-            var result = await _repository.InsertAsync(entity);
+            var imageUrl = await _localStorageService.SaveBase64ImageAsync(command.Imagem_cnh);
 
-            return OperationResult<string>.Ok(result);
+            entity.WithImageUrl(imageUrl);
+
+            await _repository.InsertAsync(entity);
         }
 
-        return OperationResult<string>.Fail("Dados inválidos");
+        return operationResult;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MotosAluguel.Domain.Interfaces.Repositories.Rentals;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Domain.Validators.Motorcycles.Delete;
 
@@ -17,13 +18,20 @@ public class MotorcycleExistAnyRental : IMotorcycleDeleteValidator
         _validator = validator;
     }
 
-    public async Task<bool> ValidateAsync(string id)
+
+    public async Task<OperationResult> ValidateAsync(string id)
     {
-        var isValid = await _validator.ValidateAsync(id);
+        var operationResult = await _validator.ValidateAsync(id);
 
-        if (isValid)
-            return !await _rentalReaderRepository.ExistAnyRentalByMotorcycleId(id);
+        if (operationResult.Success)
+        {
+            var rentalExist = await _rentalReaderRepository.ExistAnyRentalByMotorcycleId(id);
 
-        return isValid;
+            if (rentalExist)
+                return OperationResult.Fail("Não é possível excluir a moto, pois ela está vinculada a uma locação.");
+
+        }
+
+        return operationResult;
     }
 }

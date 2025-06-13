@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MotosAluguel.Application.Commands.Motorcycles;
 using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Application.Querys.Motorcycles;
 
@@ -25,7 +24,7 @@ public class MotorCycleQueryController : ControllerBase
             return Ok(result.Data);
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 
     [HttpGet("{id}")]
@@ -37,6 +36,6 @@ public class MotorCycleQueryController : ControllerBase
             return Ok(result.Data);
 
         else
-            return BadRequest(result.Message);
+            return StatusCode((int)result.HttpStatusCode, result.ErrorMessage);
     }
 }

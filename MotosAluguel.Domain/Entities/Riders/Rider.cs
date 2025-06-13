@@ -4,17 +4,24 @@ namespace MotosAluguel.Domain.Entities.Riders;
 
 public sealed class Rider : EntityBase
 {
-    public string Id { get; set; }
+    public string Id { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public string Cnpj { get; set; }
+    public string Cnpj { get; init; }
 
-    public DateTime BirthDate { get; set; }
+    public DateTime BirthDate { get; init; }
 
-    public string Cnh { get; set; }
+    public string Cnh { get; init; }
 
-    public string CnhType { get; set; }
+    public string CnhType { get; init; }
 
-    public string ImageCnhUrl { get; set; }
+    public string ImageCnhUrl { get; init; }
+
+    public string ImagemCnhbase64 { get; private set; }
+
+    public void WithImageUrl(string imageUrl)
+    {
+        ImagemCnhbase64 = imageUrl;
+    }
 }

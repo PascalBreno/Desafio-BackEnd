@@ -12,12 +12,12 @@ public class MotorcyclesReaderRepository(IConfiguration configuration)
     public async Task<bool> ExistById(string id)
     {
         string sql = @"Select Count(*) from Motorcycles
-                       Where Id = @Id;";
+                       Where Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
         var parameters = new { Id = id };
-        var result = await connection.QuerySingleAsync<int>(sql, id);
+        var result = await connection.QuerySingleOrDefaultAsync<int>(sql, parameters);
 
         return result > 0;
     }
@@ -27,10 +27,11 @@ public class MotorcyclesReaderRepository(IConfiguration configuration)
     {
         using var connection = GetConnection();
 
-        const string sql = "SELECT COUNT(*) FROM Motorcycles WHERE Plate = @Plate";
+        const string sql = "SELECT COUNT(*) FROM Motorcycles " +
+                           "WHERE Plate = @Plate AND IsDeleted = false";
 
         var parameters = new { Plate = plate };
-        var count = await connection.ExecuteScalarAsync<int>(sql, parameters);
+        var count = await connection.QuerySingleOrDefaultAsync<int>(sql, parameters);
 
         return count > 0;
 
@@ -39,7 +40,7 @@ public class MotorcyclesReaderRepository(IConfiguration configuration)
     public async Task<Motorcycle> GetByIdAsync(string id)
     {
         string sql = @"Select * from Motorcycles
-                       Where Id = @Id;";
+                       Where Id = @Id AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
@@ -53,25 +54,12 @@ public class MotorcyclesReaderRepository(IConfiguration configuration)
     public async Task<IEnumerable<Motorcycle>> GetByPlateAsync(string plate)
     {
         string sql = @"Select * from Motorcycles
-                       Where Plate like @plate;";
+                       Where Plate like @plate AND IsDeleted = false;";
 
         using var connection = GetConnection();
 
         var parameters = new { Plate = $"%{plate}%" };
         var result = await connection.QueryAsync<Motorcycle>(sql, parameters);
-
-        return result;
-    }
-
-    public async Task<string> GetCnhById(string id)
-    {
-        string sql = @"Select Cnh from Motorcycles
-                       Where Id = @Id;";
-
-        using var connection = GetConnection();
-
-        var parameters = new { Id = id};
-        var result = await connection.QuerySingleAsync<string>(sql, parameters);
 
         return result;
     }

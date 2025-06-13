@@ -1,7 +1,7 @@
-﻿using MotosAluguel.Application.Commons;
-using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
+﻿using MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Repositories.Motorcyles;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
+using MotosAluguel.Domain.Validators.Base;
 
 namespace MotosAluguel.Application.Orchestrators.Motorcycles;
 
@@ -19,18 +19,20 @@ public class MotorcycleDeleteOrchestrator : IMotorcycleDeleteOrchestrator
         _validator = motorcycleDeleteValidator;
     }
 
-    public async Task<OperationResult<bool>> RunAsync(string id)
+    public async Task<OperationResult> RunAsync(string id)
     {
-        var isValid = await _validator.ValidateAsync(id);
+        var operationResult = await _validator.ValidateAsync(id);
 
-        if (isValid)
+        if (operationResult.Success)
         {
             var resultValid = await _repository.DeleteAsync(id);
 
-            if(resultValid)
-                return OperationResult<bool>.Ok();
+            if (resultValid)
+                return operationResult;
+
+            return OperationResult.Fail("Houve um erro na inserção dos dados");
         }
 
-        return OperationResult<bool>.Fail("Dados inválidos");
+        return operationResult;
     }
 }
