@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\MotosAluguel.Application.csproj" />
     <ProjectReference Include="..\MotosAluguel.Api\MotosAluguel.Api.csproj" />
   </ItemGroup>
 
