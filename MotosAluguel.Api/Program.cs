@@ -16,7 +16,6 @@ using MotosAluguel.Domain.Interfaces.StorageManager;
 using MotosAluguel.Domain.Interfaces.Validators.Motorcycles;
 using MotosAluguel.Domain.Interfaces.Validators.Rentals;
 using MotosAluguel.Domain.Interfaces.Validators.Riders;
-using MotosAluguel.Domain.Messaging.Consumers;
 using MotosAluguel.Domain.Validators.Motorcycles.Delete;
 using MotosAluguel.Domain.Validators.Motorcycles.Insert;
 using MotosAluguel.Domain.Validators.Rentals;
@@ -91,25 +90,6 @@ internal class Program
 
         builder.Services.AddSingleton<INotificationWriterRepository, NotificationWriterRepository>();
 
-        var serviceBusConnectionString = builder.Configuration["ServiceBus:ConnectionString"];
-
-        builder.Services.AddMassTransit(x =>
-        {
-            x.AddConsumer<MotorcycleConsumer>();
-
-            x.UsingAzureServiceBus((context, cfg) =>
-            {
-                cfg.ConfigureEndpoints(context);
-
-                cfg.Host(serviceBusConnectionString);
-
-                cfg.ReceiveEndpoint("motorcycle-events", e =>
-                {
-                    e.ConfigureConsumer<MotorcycleConsumer>(context);
-                });
-            });
-        });
-
         builder.Services.AddValidatorsFromAssemblyContaining<MotorcycleInsertCommandValidator>(ServiceLifetime.Transient);
 
         builder.Services.AddFluentValidationAutoValidation()
@@ -125,6 +105,7 @@ internal class Program
 
         builder.Services.AddSingleton<DatabaseWriterConnection>();
         builder.Services.AddSingleton<DatabaseReaderConnection>();
+        builder.Services.AddSingleton<ServiceBusPublisher>();
 
         var app = builder.Build();
 

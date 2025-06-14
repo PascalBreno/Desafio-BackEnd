@@ -5,5 +5,5 @@ namespace MotosAluguel.Application.Interfaces.Orchestrators.Rentals;
 
 public interface IRentalSettlementOrchestrator
 {
-    Task<OperationResult<string>> RunAsync(RentalSettlementCommand command);
+    Task<OperationResult> RunAsync(string id, RentalSettlementCommand command);
 }

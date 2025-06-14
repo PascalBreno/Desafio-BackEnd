@@ -33,7 +33,7 @@ public class MotorcycleControllerTests
         MotorcycleInsertCommand command)
     {
         // Arrange
-        var operationResult = OperationResult<MotorcycleResponse>.Ok();
+        var operationResult = OperationResult.Ok();
 
         _insertOrchestrator.RunAsync(command)
             .Returns(operationResult);
@@ -52,7 +52,7 @@ public class MotorcycleControllerTests
         MotorcycleInsertCommand command)
     {
         // Arrange
-        var operationResult = OperationResult<MotorcycleResponse>.Fail("unit Test");
+        var operationResult = OperationResult.Fail("unit Test");
 
         _insertOrchestrator.RunAsync(command)
             .Returns(operationResult);

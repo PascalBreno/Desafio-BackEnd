@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "MotosAluguel.Function": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7045",
+      "nativeDebugging": true
+    }
+  }
+}

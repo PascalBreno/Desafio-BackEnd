@@ -6,5 +6,5 @@ namespace MotosAluguel.Application.Interfaces.Orchestrators.Motorcycles;
 
 public interface IMotorcycleInsertOrchestrator
 {
-    Task<OperationResult<MotorcycleResponse>> RunAsync(MotorcycleInsertCommand command);
+    Task<OperationResult> RunAsync(MotorcycleInsertCommand command);
 }

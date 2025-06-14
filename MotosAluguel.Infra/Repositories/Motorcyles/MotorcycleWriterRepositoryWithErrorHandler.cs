@@ -36,7 +36,7 @@ public class MotorcycleWriterRepositoryWithErrorHandler : IMotorcycleWriterRepos
 
         catch (Exception ex)
         {
-            throw new Exception("An error occurred while inserting the motor cycle.", ex);
+            throw new Exception("An error occurred while updating the plate motor cycle.", ex);
         }
     }
 

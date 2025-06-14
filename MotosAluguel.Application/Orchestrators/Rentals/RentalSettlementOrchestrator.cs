@@ -6,7 +6,7 @@ namespace MotosAluguel.Application.Orchestrators.Rentals;
 
 public class RentalSettlementOrchestrator : IRentalSettlementOrchestrator
 {
-    public Task<OperationResult<string>> RunAsync(RentalSettlementCommand command)
+    public Task<OperationResult> RunAsync(string id, RentalSettlementCommand command)
     {
         throw new NotImplementedException();
     }

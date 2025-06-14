@@ -35,7 +35,7 @@ public class RentalController : ControllerBase
     [HttpPut("{Id}")]
     public async Task<IActionResult> CompleteRental([FromRoute] string Id, [FromBody] RentalSettlementCommand command)
     {
-        var result = await _rentalSettlementOrchestrator.RunAsync(command);
+        var result = await _rentalSettlementOrchestrator.RunAsync(Id, command);
 
         if (result.Success)
             return Ok(result.ErrorMessage);
